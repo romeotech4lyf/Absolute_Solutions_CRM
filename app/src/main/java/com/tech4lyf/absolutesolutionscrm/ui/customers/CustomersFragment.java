@@ -1,4 +1,4 @@
-package com.tech4lyf.absolutesolutionscrm.ui.slideshow;
+package com.tech4lyf.absolutesolutionscrm.ui.customers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.tech4lyf.absolutesolutionscrm.R;
 
-public class SlideshowFragment extends Fragment {
+public class CustomersFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private CustomersViewModel customersViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        customersViewModel =
+                ViewModelProviders.of(this).get(CustomersViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_tools, container, false);
+        final TextView textView = root.findViewById(R.id.text_tools);
+        customersViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

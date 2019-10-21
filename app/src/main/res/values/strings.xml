@@ -12,10 +12,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="daily_spun_change">Daily Spun Change</string>
+    <string name="service_entry">Service Entry</string>
+    <string name="schedule_work">Schedule work</string>
+    <string name="service_log">Service Log</string>
+
+    <string name="menu_customers">Customers</string>
+    <string name="menu_services">Services</string>
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
+    <string name="menu_about">About us</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 </resources>

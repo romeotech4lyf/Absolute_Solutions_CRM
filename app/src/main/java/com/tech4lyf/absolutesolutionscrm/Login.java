@@ -3,12 +3,15 @@ package com.tech4lyf.absolutesolutionscrm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.tech4lyf.absolutesolutionscrm.Models.*;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,9 +23,16 @@ import com.tech4lyf.absolutesolutionscrm.Models.LoginUser;
 
 public class Login extends AppCompatActivity {
 
+    User user;
+    boolean loginStatus;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
     private DatabaseReference mDatabase;
     EditText editUserName,editPassword;
     Button butnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,67 +41,110 @@ public class Login extends AppCompatActivity {
         editUserName = (EditText) findViewById(R.id.edtUsername);
         editPassword = (EditText) findViewById(R.id.edtPassword);
         butnLogin = (Button) findViewById(R.id.btnLogin);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference().child("Users");
+
+        String un,pass;
+        un="testuser";
+        pass="Test@2019";
+        login(un,pass);
 
         butnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            /*Query query = mDatabase.child("users").orderByChild("username").equalTo(editUserName.getText().toString().trim());
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        // dataSnapshot is the "issue" node with all children with id 0
+                String un,pass;
+                un="testuser";
+                pass="Test@2019";
+                login(un,pass);
 
-                        for (DataSnapshot user : dataSnapshot.getChildren()) {
-                            // do something with the individual "issues"
-                            LoginUser loginUser = user.getValue(LoginUser.class);
-                            Log.e("Check",loginUser.getUserName());
-
-                            if (loginUser.getPassword().equals(editPassword.getText().toString().trim())) {
-                                //Intent intent = new Intent(context, MainActivity.class);
-                                //startActivity(intent);
-                                Toast.makeText(Login.this, "Login Success!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Password is wrong", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+                //testIp();
+                //login(editUserName.getText().toString(),editPassword.getText().toString());
             }
-        });*/
-
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        //LoginUser user = dataSnapshot.getValue(LoginUser.class);
-
-                        LoginUser loginUser=new LoginUser("akash","Akash@1997");
-                        databaseReference.child("users").setValue(loginUser);
-                        //Log.d("Done", "User name: " + user.getUserName() + ", id: " + user.getPassword());
-                        //textView.setText(user.getName());
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w("FB-Error", "Failed to read value.", error.toException());
-                    }
-                });
-            }
-
         });
+    }
+
+    boolean login(final String username, final String password) {
+
+
+
+        databaseReference.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                loginStatus=false;
+                if (dataSnapshot.exists()) {
+                    // dataSnapshot is the "issue" node with all children with id 0
+
+                    for (DataSnapshot user : dataSnapshot.getChildren()) {
+                        // do something with the individual "issues"
+                        User usersBean = user.getValue(User.class);
+
+                        if (usersBean.getPassword().toString().equals(password)){
+                            //Intent intent = new Intent(context, MainActivity.class);
+                            //startActivity(intent);
+                            Toast.makeText(Login.this, "Login Success!", Toast.LENGTH_SHORT).show();
+                            Intent actDashboard=new Intent(Login.this,Home.class);
+                            startActivity(actDashboard);
+
+
+
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Password is wrong", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Login.this, "Login failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+        return false;
+    }
+
+    void testIp()
+    {
+        try {
+
+            String un,pwd,key;
+            un="testuser";
+            pwd="Test@2019";
+
+
+
+            if (TextUtils.isEmpty(un) ) {
+
+                Toast.makeText(getApplicationContext(), "Name Empty!", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+
+                user = new User(databaseReference.push().getKey(), un, pwd);
+
+                databaseReference.child(user.getKey()).setValue(user);
+
+                Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        } catch (Exception e) {
+
+            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

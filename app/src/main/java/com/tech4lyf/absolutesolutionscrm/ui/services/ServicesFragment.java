@@ -1,4 +1,4 @@
-package com.tech4lyf.absolutesolutionscrm.ui.share;
+package com.tech4lyf.absolutesolutionscrm.ui.services;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.tech4lyf.absolutesolutionscrm.R;
 
-public class ShareFragment extends Fragment {
+public class ServicesFragment extends Fragment {
 
-    private ShareViewModel shareViewModel;
+    private ServicesViewModel servicesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        shareViewModel =
-                ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_share, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
+        servicesViewModel =
+                ViewModelProviders.of(this).get(ServicesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        final TextView textView = root.findViewById(R.id.text_slideshow);
+        servicesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

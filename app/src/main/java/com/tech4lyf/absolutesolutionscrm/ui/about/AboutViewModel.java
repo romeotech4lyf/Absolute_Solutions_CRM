@@ -1,14 +1,14 @@
-package com.tech4lyf.absolutesolutionscrm.ui.share;
+package com.tech4lyf.absolutesolutionscrm.ui.about;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ShareViewModel extends ViewModel {
+public class AboutViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ShareViewModel() {
+    public AboutViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is share fragment");
     }
