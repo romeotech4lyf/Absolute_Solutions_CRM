@@ -22,14 +22,14 @@ public class ServicesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         servicesViewModel =
                 ViewModelProviders.of(this).get(ServicesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        View root = inflater.inflate(R.layout.fragment_services, container, false);
+        /*final TextView textView = root.findViewById(R.id.text_slideshow);
         servicesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 }

@@ -4,6 +4,8 @@
     <string name="version">V 1.0 | Beta</string>
     <string name="t4lcredit">Powered by #Tech4LYF</string>
     <string name="tit_login">Login</string>
+    <string name="email">E-Mail</string>
+    <string name="forgot_button">Send Link</string>
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -11,11 +13,18 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
+    <string name="forgotpassword">Forgot Password?</string>
 
     <string name="daily_spun_change">Daily Spun Change</string>
     <string name="service_entry">Service Entry</string>
     <string name="schedule_work">Schedule work</string>
     <string name="service_log">Service Log</string>
+    <string name="inline_change">Inline Change</string>
+
+    <string name="new_customer">New Customer</string>
+    <string name="old_customers">Old Customers</string>
+
 
     <string name="menu_customers">Customers</string>
     <string name="menu_services">Services</string>
@@ -23,4 +32,7 @@
     <string name="menu_about">About us</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

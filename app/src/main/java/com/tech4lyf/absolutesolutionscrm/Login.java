@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.tech4lyf.absolutesolutionscrm.Models.*;
 
@@ -17,9 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.tech4lyf.absolutesolutionscrm.Models.LoginUser;
 
 public class Login extends AppCompatActivity {
 
@@ -32,15 +30,25 @@ public class Login extends AppCompatActivity {
     private DatabaseReference mDatabase;
     EditText editUserName,editPassword;
     Button butnLogin;
+    TextView forgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editUserName = (EditText) findViewById(R.id.edtUsername);
+        editUserName = (EditText) findViewById(R.id.edtMail);
         editPassword = (EditText) findViewById(R.id.edtPassword);
-        butnLogin = (Button) findViewById(R.id.btnLogin);
+        butnLogin = (Button) findViewById(R.id.btnFP);
+        forgotPass=(TextView)findViewById(R.id.tvForgotPass);
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent actFP=new Intent(Login.this,ForgotPassword.class);
+                startActivity(actFP);
+            }
+        });
 
 
         firebaseDatabase=FirebaseDatabase.getInstance();
@@ -49,7 +57,7 @@ public class Login extends AppCompatActivity {
         String un,pass;
         un="testuser";
         pass="Test@2019";
-        login(un,pass);
+        //login(un,pass);
 
         butnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
