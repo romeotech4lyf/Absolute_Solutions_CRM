@@ -27,8 +27,10 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardnewcust"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:clickable="true"
                 app:cardUseCompatPadding="true">
 
                 <ImageView
@@ -54,6 +56,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardoldcust"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 app:cardUseCompatPadding="true">

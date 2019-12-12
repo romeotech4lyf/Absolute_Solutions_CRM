@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+
+    android:gravity="center"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/tvMachName"
+        android:layout_width="300dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:text="Test"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/cbMach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+</LinearLayout>

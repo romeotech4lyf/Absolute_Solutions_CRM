@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.schedulework.ScheduleWork">
@@ -17,23 +18,20 @@
             android:orientation="vertical"
             android:id="@+id/linearLayout">
 
-            <ListView
-                android:id="@+id/scheduledWorkList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:layout_conversion_absoluteHeight="64dp"
-                tools:layout_conversion_absoluteWidth="411dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/fabNewSW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:src="@drawable/plus" />
+        android:src="@drawable/plus"
+        app:backgroundTint="#000" />
 </FrameLayout>

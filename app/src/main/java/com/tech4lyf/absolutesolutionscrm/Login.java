@@ -37,6 +37,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //testIpSW();
+
         editUserName = (EditText) findViewById(R.id.edtMail);
         editPassword = (EditText) findViewById(R.id.edtPassword);
         butnLogin = (Button) findViewById(R.id.btnFP);
@@ -66,6 +68,9 @@ public class Login extends AppCompatActivity {
                 String un,pass;
                 un="testuser";
                 pass="Test@2019";
+
+                /*un=editUserName.getText().toString();
+                pass=editPassword.getText().toString();*/
                 login(un,pass);
 
                 //testIp();
@@ -141,6 +146,41 @@ public class Login extends AppCompatActivity {
 
                 user = new User(databaseReference.push().getKey(), un, pwd);
 
+                databaseReference.child(user.getKey()).setValue(user);
+
+                Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        } catch (Exception e) {
+
+            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    void testIpSW()
+    {
+        try {
+
+            String un,pwd,key;
+            un="testuser";
+            pwd="Test@2019";
+
+
+
+            if (TextUtils.isEmpty(un) ) {
+
+                Toast.makeText(getApplicationContext(), "Name Empty!", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+
+
+                firebaseDatabase=FirebaseDatabase.getInstance();
+                databaseReference=firebaseDatabase.getReference().child("ScheduledWork");
+                ScheduledWorkList user = new ScheduledWorkList(databaseReference.push().getKey(), "Akash", "10-09-1997","1","true");
                 databaseReference.child(user.getKey()).setValue(user);
 
                 Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
