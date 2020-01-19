@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+
+    android:gravity="center"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/tvSLID"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/SLCName"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:text="Customer" />
+
+    <TextView
+        android:id="@+id/SLCDate"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:text="00/00/0000" />
+</LinearLayout>

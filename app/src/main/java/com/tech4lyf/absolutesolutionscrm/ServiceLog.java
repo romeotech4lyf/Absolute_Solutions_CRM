@@ -1,4 +1,4 @@
-package com.tech4lyf.absolutesolutionscrm.ui.oldcustomers;
+package com.tech4lyf.absolutesolutionscrm;
 
 import android.content.Context;
 import android.net.Uri;
@@ -20,10 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tech4lyf.absolutesolutionscrm.Models.Customer;
-import com.tech4lyf.absolutesolutionscrm.Models.ScheduledWorkList;
-import com.tech4lyf.absolutesolutionscrm.R;
-import com.tech4lyf.absolutesolutionscrm.RVAdapter;
-import com.tech4lyf.absolutesolutionscrm.RVAdapterCust;
+import com.tech4lyf.absolutesolutionscrm.Models.ServiceLogModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +31,12 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OldCustomers.OnFragmentInteractionListener} interface
+ * {@link ServiceLog.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link OldCustomers#newInstance} factory method to
+ * Use the {@link ServiceLog#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OldCustomers extends Fragment {
-
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    private RecyclerView CustRecyclerView;
-
+public class ServiceLog extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,9 +46,14 @@ public class OldCustomers extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    private RecyclerView SLRecyclerView;
+
     private OnFragmentInteractionListener mListener;
 
-    public OldCustomers() {
+    public ServiceLog() {
         // Required empty public constructor
     }
 
@@ -66,11 +63,11 @@ public class OldCustomers extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OldCustomers.
+     * @return A new instance of fragment ServiceLog.
      */
     // TODO: Rename and change types and number of parameters
-    public static OldCustomers newInstance(String param1, String param2) {
-        OldCustomers fragment = new OldCustomers();
+    public static ServiceLog newInstance(String param1, String param2) {
+        ServiceLog fragment = new ServiceLog();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -93,18 +90,18 @@ public class OldCustomers extends Fragment {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_old_customers, container, false);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        getCustfromDB();
+        getSLfromDB();
 
-        CustRecyclerView = (RecyclerView) root.findViewById(R.id.rv2);
+        SLRecyclerView = (RecyclerView) root.findViewById(R.id.rv2);
 
         LinearLayoutManager recyclerLayoutManager =
                 new LinearLayoutManager(getActivity().getApplicationContext());
-        CustRecyclerView.setLayoutManager(recyclerLayoutManager);
+        SLRecyclerView.setLayoutManager(recyclerLayoutManager);
 
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration( CustRecyclerView.getContext(),
+                new DividerItemDecoration( SLRecyclerView.getContext(),
                         recyclerLayoutManager.getOrientation());
-        CustRecyclerView.addItemDecoration(dividerItemDecoration);
+        SLRecyclerView.addItemDecoration(dividerItemDecoration);
 
 
 
@@ -112,19 +109,20 @@ public class OldCustomers extends Fragment {
         return root;
     }
 
-    private void getCustfromDB() {
-        databaseReference.child("Customers").addListenerForSingleValueEvent(new ValueEventListener() {
+
+    private void getSLfromDB() {
+        databaseReference.child("ServiceEntry").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Customer> adsList = new ArrayList<Customer>();
+                List<ServiceLogModel> adsList = new ArrayList<ServiceLogModel>();
                 for (DataSnapshot adSnapshot: dataSnapshot.getChildren()) {
-                    adsList.add(adSnapshot.getValue(Customer.class));
+                    adsList.add(adSnapshot.getValue(ServiceLogModel.class));
                 }
                 Log.d(TAG, "no of ads for search is "+adsList.size());
 
-                RVAdapterCust recyclerViewAdapter = new
-                        RVAdapterCust(adsList, getActivity());
-                CustRecyclerView.setAdapter(recyclerViewAdapter);
+                RVAdapterServices recyclerViewAdapter = new
+                        RVAdapterServices(adsList, getActivity());
+                SLRecyclerView.setAdapter(recyclerViewAdapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -150,7 +148,7 @@ public class OldCustomers extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()             + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()+ " must implement OnFragmentInteractionListener");
         }
     }
 

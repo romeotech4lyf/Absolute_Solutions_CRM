@@ -49,6 +49,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardLog"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cardUseCompatPadding="true">
@@ -76,6 +77,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardInline"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cardUseCompatPadding="true">

@@ -16,6 +16,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardDailySpun"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:shape="ring"
@@ -109,6 +110,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardServiceLog"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:shape="ring"

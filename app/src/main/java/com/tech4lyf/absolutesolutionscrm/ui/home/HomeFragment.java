@@ -17,15 +17,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.tech4lyf.absolutesolutionscrm.DailySpun;
 import com.tech4lyf.absolutesolutionscrm.R;
+import com.tech4lyf.absolutesolutionscrm.ServiceLog;
 import com.tech4lyf.absolutesolutionscrm.ui.schedulework.ScheduleWork;
 import com.tech4lyf.absolutesolutionscrm.ui.serviceentry.ServiceEntry;
 
-public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInteractionListener,ScheduleWork.OnFragmentInteractionListener{
+public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInteractionListener,ScheduleWork.OnFragmentInteractionListener,ServiceLog.OnFragmentInteractionListener,DailySpun.OnFragmentInteractionListener{
 
     private HomeViewModel homeViewModel;
 
-    CardView cardServiceEntry,cardScheduleWork;
+    CardView cardServiceEntry,cardScheduleWork,cardServiceLog,cardDailySpun;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInt
 
         cardServiceEntry=(CardView)root.findViewById(R.id.cardServiceEntry);
         cardScheduleWork=(CardView)root.findViewById(R.id.cardScheduleWork);
+        cardDailySpun=(CardView)root.findViewById(R.id.cardDailySpun);
+        cardServiceLog=(CardView)root.findViewById(R.id.cardServiceLog);
         cardServiceEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +66,30 @@ public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInt
                 transaction.commit();
             }
         });
+
+        cardServiceLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment serviceLog = new ServiceLog();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, serviceLog); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+
+        cardDailySpun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment dailySpun = new DailySpun();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, dailySpun); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+
+
 
         return root;
     }

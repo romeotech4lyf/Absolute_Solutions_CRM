@@ -3,17 +3,24 @@ package com.tech4lyf.absolutesolutionscrm.ui.newcustomer;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -40,6 +47,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tech4lyf.absolutesolutionscrm.GPSTracker;
 import com.tech4lyf.absolutesolutionscrm.MainActivity;
 import com.tech4lyf.absolutesolutionscrm.Models.Customer;
 import com.tech4lyf.absolutesolutionscrm.Models.Machine;
@@ -59,6 +67,7 @@ import java.util.List;
 import javax.crypto.Mac;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.LOCATION_SERVICE;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
@@ -70,43 +79,66 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
  * Use the {@link NewCustomer#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewCustomer extends Fragment{
+public class NewCustomer extends Fragment implements LocationListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
 
+    // flag for GPS status
+    boolean isGPSEnabled = false;
+
+    // flag for network status
+    boolean isNetworkEnabled = false;
+
+    // flag for GPS status
+    boolean canGetLocation = false;
+
+    Location location; // location
+    double latitude; // latitude
+    double longitude; // longitude
+
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+
+    // Declaring a Location Manager
+    protected LocationManager locationManager;
+
+
     Customer customer;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    Intent intent ;
-    Bitmap bitmap,bitmapmac;
-    int cam=0;
-    public  static final int RequestPermissionCode  = 1 ;
-    CardView cvCustPic,cvMacPic;
-    ImageView imgcust,imgMac;
-    String id,name,date,phone,ref,loc,addr,romac,parts,price,handcash,customerpic,macpic;
+    Intent intent;
+    Bitmap bitmap, bitmapmac;
+    int cam = 0;
+    public static final int RequestPermissionCode = 1;
+    CardView cvCustPic, cvMacPic;
+    ImageView imgcust, imgMac;
+    String id, name, date, phone, ref, loc, addr, romac, parts, price, handcash, customerpic, macpic;
 
 
     String[] macArrName;
     String[] macArrKey;
 
-    ArrayList listMac,listPart;
-    ArrayList checkedItemsMac,checkedItemsPart;
+    ArrayList listMac, listPart;
+    ArrayList checkedItemsMac, checkedItemsPart;
     int fetchCount;
-    String[] macList,partList;
-    boolean[] checkedMac,checkedPart;
+    String[] macList, partList;
+    boolean[] checkedMac, checkedPart;
 
     int itemCount;
-    StringBuilder sb1,sb2;
+    StringBuilder sb1, sb2;
 
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    EditText edtName,edtDate,edtPhone,edtRef,edtLoc,edtAddr,edtMac,edtPart,edtPrice,edtHC;
+    EditText edtName, edtDate, edtPhone, edtRef, edtLoc, edtAddr, edtMac, edtPart, edtPrice, edtHC;
     Button btnSave;
 
     private OnFragmentInteractionListener mListener;
@@ -131,6 +163,69 @@ public class NewCustomer extends Fragment{
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public Location getLocation() {
+        try {
+            locationManager = (LocationManager) getContext()
+                    .getSystemService(LOCATION_SERVICE);
+            // getting GPS status
+            isGPSEnabled = locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+            // getting network status
+            isNetworkEnabled = locationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // no network provider is enabled
+            } else {
+                this.canGetLocation = true;
+                if (isNetworkEnabled) {
+                    if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    Activity#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for Activity#requestPermissions for more details.
+                        return null;
+                    }
+                    locationManager.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    Log.d("Network", "Network");
+                    if (locationManager != null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                        }
+                    }
+                }
+                // if GPS Enabled get lat/long using GPS Services
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                        Log.d("GPS Enabled", "GPS Enabled");
+                        if (locationManager != null) {
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return location;
     }
 
     @Override
@@ -263,6 +358,32 @@ public class NewCustomer extends Fragment{
 
                                       }
                                   });
+
+        edtLoc.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+
+                Location l=getLocation();
+                GPSTracker gps=new GPSTracker(getActivity());
+                if(gps.canGetLocation()){
+
+                    double latitude = l.getLatitude();
+                    double longitude = l.getLongitude();
+
+                    // \n is for new line
+                    //Toast.makeText(getActivity(), "Your Location is - \nLat: "+ latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    edtLoc.setText(latitude+","+longitude);
+                    Log.e("CO",latitude+","+longitude);
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+            }
+        });
 
         edtPart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -643,6 +764,26 @@ public class NewCustomer extends Fragment{
         mListener = null;
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        //Log.v("Lati",Double.toString(location.getLatitude()));
+        Toast.makeText(getActivity(), ""+location.getLatitude(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
 
 
     /**
@@ -671,7 +812,7 @@ public class NewCustomer extends Fragment{
         }
         catch (Exception e) {
 
-            Toast.makeText(getActivity(), "" + e, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Something went wrong!" + e, Toast.LENGTH_SHORT).show();
 
         }
 

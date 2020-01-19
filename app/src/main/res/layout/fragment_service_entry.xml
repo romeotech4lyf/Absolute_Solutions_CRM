@@ -18,105 +18,314 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/edtRej"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
+                    android:clickable="false"
                     android:ems="10"
+                    android:focusable="false"
+                    android:hint="Rejection"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtRAW" />
 
                 <EditText
-                    android:id="@+id/editText8"
+                    android:id="@+id/edtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
+                    android:clickable="false"
                     android:ems="10"
+                    android:focusable="false"
+                    android:hint="D/MM/YYYY"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="90dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtCname" />
 
                 <EditText
-                    android:id="@+id/editText9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="45dp" />
-
-                <EditText
-                    android:id="@+id/editText10"
+                    android:id="@+id/edtRAW"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginRight="13dp"
                     android:ems="10"
+                    android:hint="RAW"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="135dp" />
+                    app:layout_constraintEnd_toStartOf="@+id/edtARO"
+                    app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
 
                 <EditText
-                    android:id="@+id/editText11"
+                    android:id="@+id/edtARO"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
                     android:ems="10"
+                    android:hint="A. RO"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="233dp"
-                    tools:layout_editor_absoluteY="135dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
 
                 <EditText
-                    android:id="@+id/editText13"
+                    android:id="@+id/edtParts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
+                    android:clickable="false"
                     android:ems="10"
+                    android:focusable="false"
+                    android:hint="Parts"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="180dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtRej" />
 
                 <EditText
-                    android:id="@+id/editText14"
+                    android:id="@+id/edtPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
                     android:ems="10"
+                    android:hint="10000"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="225dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtParts" />
 
                 <EditText
-                    android:id="@+id/editText15"
+                    android:id="@+id/edtHandCash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
                     android:ems="10"
+                    android:hint="10000"
                     android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="262dp" />
-
-                <EditText
-                    android:id="@+id/editText16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    tools:layout_editor_absoluteX="120dp"
-                    tools:layout_editor_absoluteY="307dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtPrice" />
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/swStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Switch"
-                    tools:layout_editor_absoluteX="233dp"
-                    tools:layout_editor_absoluteY="325dp" />
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="159dp"
+                    android:layout_marginRight="159dp"
+                    android:text="Status "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtHandCash" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/signature_view"
+                    android:layout_width="220dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    app:backgroundColor="#ffffff"
+                    app:enableSignature="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/swStatus"
+                    app:penColor="#000000"
+                    app:penSize="5dp" >
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sign" />
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
+                    android:ems="10"
+                    android:hint="9876543210"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtDate" />
+
+                <EditText
+                    android:id="@+id/edtDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="44dp"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginRight="36dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="Description and Notes of the Service"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signature_view" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/edtCname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginRight="37dp"
+                    android:ems="10"
+                    android:hint="Customer Name"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteY="45dp" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="161dp"
+                    android:layout_marginLeft="161dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_marginEnd="161dp"
+                    android:layout_marginRight="161dp"
+                    android:text="Save"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtDesc" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:text="Customer Name"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="46dp" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="18dp"
+                    android:text="Date"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Phone"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="19dp"
+                    android:text="TDS"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="18dp"
+                    android:text="Rejection"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="21dp"
+                    android:text="Parts"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Price"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="17dp"
+                    android:text="Hand Cash"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Work Done"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Signature"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="180dp"
+                    android:text="Description"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
