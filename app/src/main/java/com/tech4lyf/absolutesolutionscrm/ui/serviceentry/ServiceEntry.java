@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,7 +76,8 @@ public class ServiceEntry extends Fragment  {
     CardView signatureView;
     String path;
 
-    EditText edtCName,edtDate,edtPhone,edtRAW,edtARO,edtRej,edtParts,edtPrice,edtHandCash,edtDesc;
+    TextInputEditText edtDate,edtPhone,edtRAW,edtARO,edtRej,edtParts,edtPrice,edtHandCash,edtDesc;
+    AutoCompleteTextView edtCName;
     Switch swStatus;
     Button btnSave;
 
@@ -143,16 +145,16 @@ public class ServiceEntry extends Fragment  {
 
         signatureView =  (CardView)root.findViewById(R.id.signature_view);
 
-        edtCName=(EditText)root.findViewById(R.id.edtCname);
-        edtDate=(EditText)root.findViewById(R.id.edtDate);
-        edtPhone=(EditText)root.findViewById(R.id.edtPhone);
-        edtRAW=(EditText)root.findViewById(R.id.edtRAW);
-        edtARO=(EditText)root.findViewById(R.id.edtARO);
-        edtRej=(EditText)root.findViewById(R.id.edtRej);
-        edtParts=(EditText)root.findViewById(R.id.edtParts);
-        edtPrice=(EditText)root.findViewById(R.id.edtPrice);
-        edtHandCash=(EditText)root.findViewById(R.id.edtHandCash);
-        edtDesc=(EditText)root.findViewById(R.id.edtDesc);
+        edtCName=(AutoCompleteTextView)root.findViewById(R.id.edtCname);
+        edtDate=(TextInputEditText)root.findViewById(R.id.edtDate);
+        edtPhone=(TextInputEditText)root.findViewById(R.id.edtPhone);
+        edtRAW=(TextInputEditText)root.findViewById(R.id.edtRAW);
+        edtARO=(TextInputEditText)root.findViewById(R.id.edtARO);
+        edtRej=(TextInputEditText)root.findViewById(R.id.edtRej);
+        edtParts=(TextInputEditText)root.findViewById(R.id.edtParts);
+        edtPrice=(TextInputEditText)root.findViewById(R.id.edtPrice);
+        edtHandCash=(TextInputEditText)root.findViewById(R.id.edtHandCash);
+        edtDesc=(TextInputEditText)root.findViewById(R.id.edtDesc);
 
         swStatus=(Switch)root.findViewById(R.id.swStatus);
 
@@ -227,7 +229,8 @@ public class ServiceEntry extends Fragment  {
             public void onClick(View view) {
                 Calendar mcurrentDate = Calendar.getInstance();
                 final int mYear = mcurrentDate.get(Calendar.YEAR);
-                final int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                mMonth=mMonth+1;
                 final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {

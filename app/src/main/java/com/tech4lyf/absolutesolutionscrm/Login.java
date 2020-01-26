@@ -57,8 +57,8 @@ public class Login extends AppCompatActivity {
         databaseReference=firebaseDatabase.getReference().child("Users");
 
         String un,pass;
-        un="testuser";
-        pass="Test@2019";
+        //un="testuser";
+        //pass="Test@2019";
         //login(un,pass);
 
         butnLogin.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +69,8 @@ public class Login extends AppCompatActivity {
                 un="testuser";
                 pass="Test@2019";
 
-                /*un=editUserName.getText().toString();
-                pass=editPassword.getText().toString();*/
+                un=editUserName.getText().toString();
+                pass=editPassword.getText().toString();
                 login(un,pass);
 
                 //testIp();

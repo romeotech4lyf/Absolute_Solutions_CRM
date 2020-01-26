@@ -31,7 +31,7 @@ public class ForgotPassword extends AppCompatActivity {
     EditText editTextMail;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    String email,fmail;
+    String email,fmail,pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,9 @@ public class ForgotPassword extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ForgotPass forgotPass=dataSnapshot.getValue(ForgotPass.class);
                 email=forgotPass.getMail();
+                pass=forgotPass.getpassword();
                 Log.e("Emailf",forgotPass.getMail());
+                Log.e("Emailf",forgotPass.getpassword());
             }
 
             @Override
@@ -119,7 +121,7 @@ public class ForgotPassword extends AppCompatActivity {
             String serverResponse=null;
             try {
 
-                URL url = new URL("https://www.tech4lyf.com/dev/thirdparty/absolutesolutions/admins/forgot_password.php?mail="+fmail+"&pass=1234");
+                URL url = new URL("https://www.tech4lyf.com/dev/thirdparty/absolutesolutions/admins/forgot_password.php?mail="+fmail+"&pass= "+pass);
                 Log.w("URL:",url.toString());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

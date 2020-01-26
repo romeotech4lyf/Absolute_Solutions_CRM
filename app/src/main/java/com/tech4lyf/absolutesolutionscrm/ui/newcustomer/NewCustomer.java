@@ -3,15 +3,11 @@ package com.tech4lyf.absolutesolutionscrm.ui.newcustomer;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,7 +21,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Base64;
@@ -38,37 +33,26 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseError;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tech4lyf.absolutesolutionscrm.GPSTracker;
-import com.tech4lyf.absolutesolutionscrm.MainActivity;
 import com.tech4lyf.absolutesolutionscrm.Models.Customer;
-import com.tech4lyf.absolutesolutionscrm.Models.Machine;
-import com.tech4lyf.absolutesolutionscrm.Models.ScheduledWorkList;
-import com.tech4lyf.absolutesolutionscrm.Models.User;
 import com.tech4lyf.absolutesolutionscrm.R;
-import com.tech4lyf.absolutesolutionscrm.RVAdapter;
-import com.tech4lyf.absolutesolutionscrm.RVAdapterRO;
 import com.tech4lyf.absolutesolutionscrm.ui.customers.CustomersFragment;
-import com.tech4lyf.absolutesolutionscrm.ui.serviceentry.ServiceEntry;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
-import javax.crypto.Mac;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -138,7 +122,7 @@ public class NewCustomer extends Fragment implements LocationListener {
     private String mParam1;
     private String mParam2;
 
-    EditText edtName, edtDate, edtPhone, edtRef, edtLoc, edtAddr, edtMac, edtPart, edtPrice, edtHC;
+    TextInputEditText edtName, edtDate, edtPhone, edtRef, edtLoc, edtAddr, edtMac, edtPart, edtPrice, edtHC;
     Button btnSave;
 
     private OnFragmentInteractionListener mListener;
@@ -243,15 +227,15 @@ public class NewCustomer extends Fragment implements LocationListener {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_new_customer, container, false);
 
-        edtName=(EditText)root.findViewById(R.id.edtnewcustName);
-        edtPhone=(EditText)root.findViewById(R.id.edtnewcustPhone);
-        edtRef=(EditText)root.findViewById(R.id.edtnewcustRef);
-        edtLoc=(EditText)root.findViewById(R.id.edtnewcustLoc);
-        edtAddr=(EditText)root.findViewById(R.id.edtnewcustAddr);
-        edtMac=(EditText)root.findViewById(R.id.edtnewcustRO);
-        edtPart=(EditText)root.findViewById(R.id.edtnewcustPart);
-        edtPrice=(EditText)root.findViewById(R.id.edtnewcustPrice);
-        edtHC=(EditText)root.findViewById(R.id.edtnewcustHC);
+        edtName=(TextInputEditText)root.findViewById(R.id.edtnewcustName);
+        edtPhone=(TextInputEditText)root.findViewById(R.id.edtnewcustPhone);
+        edtRef=(TextInputEditText)root.findViewById(R.id.edtnewcustRef);
+        edtLoc=(TextInputEditText)root.findViewById(R.id.edtnewcustLoc);
+        edtAddr=(TextInputEditText)root.findViewById(R.id.edtnewcustAddr);
+        edtMac=(TextInputEditText)root.findViewById(R.id.edtnewcustRO);
+        edtPart=(TextInputEditText)root.findViewById(R.id.edtnewcustPart);
+        edtPrice=(TextInputEditText)root.findViewById(R.id.edtnewcustPrice);
+        edtHC=(TextInputEditText)root.findViewById(R.id.edtnewcustHC);
         edtDate=root.findViewById(R.id.edtnewcustDate);
         btnSave=(Button)root.findViewById(R.id.btnnewcustSave);
 
@@ -542,7 +526,8 @@ public class NewCustomer extends Fragment implements LocationListener {
                 //edtdate.setText("");
                 Calendar mcurrentDate = Calendar.getInstance();
                 final int mYear = mcurrentDate.get(Calendar.YEAR);
-                final int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                mMonth=mMonth+1;
                 final int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {

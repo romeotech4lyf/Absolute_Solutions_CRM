@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,14 +18,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tech4lyf.absolutesolutionscrm.Models.Customer;
-import com.tech4lyf.absolutesolutionscrm.Models.ScheduledWorkList;
-import com.tech4lyf.absolutesolutionscrm.ui.newcustomer.NewCustomer;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class RVAdapterCust extends RecyclerView.Adapter<RVAdapterCust.ViewHolder> {
     private List<Customer> adsList;
@@ -82,25 +78,28 @@ public class RVAdapterCust extends RecyclerView.Adapter<RVAdapterCust.ViewHolder
                 final View dialogView = inflater.inflate(R.layout.custdetails,null);
 
 
-                TextView tvName=(TextView) dialogView.findViewById(R.id.tvName);
-                TextView tvDate=(TextView) dialogView.findViewById(R.id.tvDate);
-                TextView tvPhone=(TextView) dialogView.findViewById(R.id.tvPhone);
-                TextView tvRef=(TextView) dialogView.findViewById(R.id.tvRef);
-                TextView tvLoc=(TextView) dialogView.findViewById(R.id.tvLoc);
-                TextView tvAddr=(TextView) dialogView.findViewById(R.id.tvAddr);
-                TextView tvMac=(TextView) dialogView.findViewById(R.id.tvMach);
-                TextView tvParts=(TextView) dialogView.findViewById(R.id.tvParts);
-                TextView tvPrice=(TextView) dialogView.findViewById(R.id.tvPrice);
-                TextView tvHC=(TextView) dialogView.findViewById(R.id.tvHC);
+                TextInputEditText tvName=(TextInputEditText) dialogView.findViewById(R.id.tvName);
+                TextInputEditText tvDate=(TextInputEditText) dialogView.findViewById(R.id.tvDate);
+                TextInputEditText tvPhone=(TextInputEditText) dialogView.findViewById(R.id.tvPhone);
+                TextInputEditText tvRef=(TextInputEditText) dialogView.findViewById(R.id.tvRef);
+                TextInputEditText tvLoc=(TextInputEditText) dialogView.findViewById(R.id.tvLoc);
+                TextInputEditText tvAddr=(TextInputEditText) dialogView.findViewById(R.id.tvAddr);
+                TextInputEditText tvMac=(TextInputEditText) dialogView.findViewById(R.id.tvMach);
+                TextInputEditText tvParts=(TextInputEditText) dialogView.findViewById(R.id.tvParts);
+                TextInputEditText tvPrice=(TextInputEditText) dialogView.findViewById(R.id.tvPrice);
+                TextInputEditText tvHC=(TextInputEditText) dialogView.findViewById(R.id.tvHC);
 
                 ImageView imgMac=(ImageView)dialogView.findViewById(R.id.imgMac);
                 ImageView imgCust=(ImageView)dialogView.findViewById(R.id.imgCust);
 
-                tvName.setText("Name          "+customer.getName().toString());
-                tvDate.setText("Date            "+customer.getDate().toString());
-                tvPhone.setText("Phone         "+customer.getPhone().toString());
-                tvRef.setText("Reference  "+customer.getRef().toString());
-                tvLoc.setText("Location    "+customer.getLoc().toString());
+
+
+
+                tvName.setText(""+customer.getName().toString());
+                tvDate.setText(""+customer.getDate().toString());
+                tvPhone.setText(""+customer.getPhone().toString());
+                tvRef.setText(""+customer.getRef().toString());
+                tvLoc.setText(""+customer.getLoc().toString());
 
                 tvLoc.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,11 +114,11 @@ public class RVAdapterCust extends RecyclerView.Adapter<RVAdapterCust.ViewHolder
                     }
                 });
 
-                tvAddr.setText("Address     "+customer.getAddr().toString());
-                tvMac.setText("Machine     "+customer.getRomac().toString());
-                tvParts.setText("Parts          "+customer.getParts().toString());
-                tvPrice.setText("Price          "+customer.getPrice().toString());
-                tvHC.setText("Hand Cash "+customer.getHandcash().toString());
+                tvAddr.setText(""+customer.getAddr().toString());
+                tvMac.setText(""+customer.getRomac().toString());
+                tvParts.setText(""+customer.getParts().toString());
+                tvPrice.setText(""+customer.getPrice().toString());
+                tvHC.setText(""+customer.getHandcash().toString());
 
                 byte[] decodedString = Base64.decode(customer.getMacpic(), Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,decodedString.length);

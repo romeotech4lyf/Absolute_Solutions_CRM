@@ -16,13 +16,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tech4lyf.absolutesolutionscrm.Models.Customer;
 import com.tech4lyf.absolutesolutionscrm.Models.ServiceLogModel;
 
 import java.util.List;
-import java.util.ServiceLoader;
 
 public class RVAdapterServices extends RecyclerView.Adapter<RVAdapterServices.ViewHolder> {
     private List<ServiceLogModel> adsList;
@@ -74,16 +73,17 @@ public class RVAdapterServices extends RecyclerView.Adapter<RVAdapterServices.Vi
                 LayoutInflater inflater = ((AppCompatActivity)view.getContext()).getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.servdetails,null);
 
-                TextView tvCname=(TextView) dialogView.findViewById(R.id.tvSCname);
-                TextView tvDate=(TextView) dialogView.findViewById(R.id.tvSDate);
-                TextView tvPhone=(TextView) dialogView.findViewById(R.id.tvSPhone);
-                TextView tvTDS=(TextView) dialogView.findViewById(R.id.tvSTDS);
-                TextView tvRej=(TextView) dialogView.findViewById(R.id.tvSRej);
-                TextView tvParts=(TextView) dialogView.findViewById(R.id.tvSParts);
-                TextView tvPrice=(TextView) dialogView.findViewById(R.id.tvsPrice);
-                TextView tvHC=(TextView) dialogView.findViewById(R.id.tvsHC);
-                TextView tvWD=(TextView) dialogView.findViewById(R.id.tvsWD);
-                TextView tvDesc=(TextView) dialogView.findViewById(R.id.tvsDesc);
+                TextInputEditText tvCname=(TextInputEditText) dialogView.findViewById(R.id.tvSCname);
+                TextInputEditText tvDate=(TextInputEditText) dialogView.findViewById(R.id.tvSDate);
+                TextInputEditText tvPhone=(TextInputEditText) dialogView.findViewById(R.id.tvSPhone);
+                TextInputEditText tvRAW=(TextInputEditText) dialogView.findViewById(R.id.tvSRAW);
+                TextInputEditText tvARO=(TextInputEditText) dialogView.findViewById(R.id.tvSARO);
+                TextInputEditText tvRej=(TextInputEditText) dialogView.findViewById(R.id.tvSRej);
+                TextInputEditText tvParts=(TextInputEditText) dialogView.findViewById(R.id.tvSParts);
+                TextInputEditText tvPrice=(TextInputEditText) dialogView.findViewById(R.id.tvsPrice);
+                TextInputEditText tvHC=(TextInputEditText) dialogView.findViewById(R.id.tvsHC);
+                TextInputEditText tvWD=(TextInputEditText) dialogView.findViewById(R.id.tvsWD);
+                TextInputEditText tvDesc=(TextInputEditText) dialogView.findViewById(R.id.tvsDesc);
 
                 ImageView imgSign=(ImageView)dialogView.findViewById(R.id.imgSign);
 
@@ -91,11 +91,19 @@ public class RVAdapterServices extends RecyclerView.Adapter<RVAdapterServices.Vi
                 tvCname.setText(serviceLogModel.getcName().toString());
                 tvDate.setText(serviceLogModel.getDate().toString());
                 tvPhone.setText(serviceLogModel.getPhone().toString());
-                tvTDS.setText(serviceLogModel.getRaw()+"  A.RO: "+serviceLogModel.getAro().toString());
+                tvRAW.setText(serviceLogModel.getRaw().toString());
+                tvARO.setText(serviceLogModel.getAro().toString());
                 tvRej.setText(serviceLogModel.getRejection().toString());
                 tvParts.setText(serviceLogModel.getParts().toString());
                 tvPrice.setText(serviceLogModel.getPrice().toString());
-                tvWD.setText(serviceLogModel.getWorkdone().toString());
+
+                if(serviceLogModel.getWorkdone().toString().equalsIgnoreCase("true")) {
+                    tvWD.setText("Done");
+                }
+                else
+                {
+                    tvWD.setText("Pending");
+                }
                 tvHC.setText(serviceLogModel.getHandcash().toString());
                 tvDesc.setText(serviceLogModel.getDesc().toString());
 

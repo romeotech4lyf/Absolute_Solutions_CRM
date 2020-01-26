@@ -26,9 +26,16 @@
         android:text="01-02-1234"
         android:textSize="18sp" />
 
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="235dp"
+        android:layout_width="215dp"
         android:layout_height="25dp"
         android:layout_weight="1"
         android:text="TextView"
@@ -36,7 +43,14 @@
 
     <CheckBox
         android:id="@+id/cbStatus"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </RelativeLayout>
 </LinearLayout>

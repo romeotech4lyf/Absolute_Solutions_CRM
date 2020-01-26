@@ -1,6 +1,10 @@
 package com.tech4lyf.absolutesolutionscrm;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tech4lyf.absolutesolutionscrm.Models.ScheduledWorkList;
+import com.tech4lyf.absolutesolutionscrm.ui.serviceentry.ServiceEntry;
 
 
 import java.util.List;
@@ -60,10 +68,12 @@ public class RVAdapter extends
     @Override
     public void onBindViewHolder(RVAdapter.ViewHolder holder, int position) {
         final int itemPos = position;
+        final int p1=position;
+        String p= Integer.toString(position+1);
         final ScheduledWorkList classifiedAd = adsList.get(position);
         holder.title.setText(classifiedAd.getTitle());
         holder.date.setText(classifiedAd.getDate());
-        holder.sno.setText(classifiedAd.getSno());
+        holder.sno.setText(p);
 
         if(classifiedAd.getStatus().equals("true"))
         {
@@ -92,9 +102,64 @@ public class RVAdapter extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("bname");
+                //Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show();
+                AlertDialog alertDialog=new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Schedule Work");
+                alertDialog.setMessage(classifiedAd.getTitle());
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE,"Remove", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                driverRef.removeValue();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        Query applesQuery = ref.child("ScheduledWork").orderByChild("key").equalTo(classifiedAd.getKey());
+
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+
+
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e("Hello", "onCancelled", databaseError.toException());
+
+                            }
+                        });
+
+                                notifyItemRemoved(p1);
+                    }
+                });
+
+                alertDialog.setButton(Dialog.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
+                alertDialog.show();
+
+                        /*
+                        AlertDialog alertDialog = new AlertDialog.Builder(<YourActivityName>this).create(); //Read Update
+        alertDialog.setTitle("hi");
+        alertDialog.setMessage("this is my app");
+
+        alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int which) {
+              // here you can add functions
+           }
+        });
+
+        alertDialog.show();  //<-- See This!
+    }
+                        * */
             }
         });
     }
