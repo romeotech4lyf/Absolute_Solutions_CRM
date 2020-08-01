@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,19 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tech4lyf.absolutesolutionscrm.DailySpun;
+import com.tech4lyf.absolutesolutionscrm.Models.ServiceEntryModel;
 import com.tech4lyf.absolutesolutionscrm.R;
 import com.tech4lyf.absolutesolutionscrm.ServiceLog;
 import com.tech4lyf.absolutesolutionscrm.ui.schedulework.ScheduleWork;
 import com.tech4lyf.absolutesolutionscrm.ui.serviceentry.ServiceEntry;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInteractionListener,ScheduleWork.OnFragmentInteractionListener,ServiceLog.OnFragmentInteractionListener,DailySpun.OnFragmentInteractionListener{
 
@@ -50,6 +59,7 @@ public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInt
             }
         }
     }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -173,6 +183,9 @@ public class HomeFragment extends Fragment implements ServiceEntry.OnFragmentInt
                 transaction.commit();
             }
         });
+
+
+
 
 
 

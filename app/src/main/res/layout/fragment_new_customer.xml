@@ -91,18 +91,12 @@
                     android:layout_height="wrap_content"
                     android:hint="Address" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <Spinner
+                android:layout_marginVertical="20dp"
                 android:layout_width="300dp"
+                android:id="@+id/edtnewcustMachines"
                 android:layout_height="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtnewcustRO"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="RO Machine" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </Spinner>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

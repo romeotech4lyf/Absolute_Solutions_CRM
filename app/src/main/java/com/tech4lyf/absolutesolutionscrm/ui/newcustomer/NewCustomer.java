@@ -28,11 +28,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -78,6 +81,7 @@ public class NewCustomer extends Fragment implements LocationListener {
 
     // flag for GPS status
     boolean canGetLocation = false;
+    ArrayList<String> machineList = new ArrayList<>();
 
     Location location; // location
     double latitude; // latitude
@@ -91,8 +95,6 @@ public class NewCustomer extends Fragment implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
-
-
     Customer customer;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -103,11 +105,8 @@ public class NewCustomer extends Fragment implements LocationListener {
     CardView cvCustPic, cvMacPic;
     ImageView imgcust, imgMac;
     String id, name, date, phone, ref, loc, addr, romac, parts, price, handcash, customerpic, macpic;
-
-
     String[] macArrName;
     String[] macArrKey;
-
     ArrayList listMac, listPart;
     ArrayList checkedItemsMac, checkedItemsPart;
     int fetchCount;
@@ -117,12 +116,15 @@ public class NewCustomer extends Fragment implements LocationListener {
     int itemCount;
     StringBuilder sb1, sb2;
 
+    private ArrayAdapter machines;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    TextInputEditText edtName, edtDate, edtPhone, edtRef, edtLoc, edtAddr, edtMac, edtPart, edtPrice, edtHC;
+    TextInputEditText edtName, edtDate, edtPhone, edtRef, edtLoc, edtAddr, edtPart, edtPrice, edtHC;
+    Spinner edtMac;
     Button btnSave;
 
     private OnFragmentInteractionListener mListener;
@@ -188,6 +190,7 @@ public class NewCustomer extends Fragment implements LocationListener {
                         }
                     }
                 }
+
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
@@ -232,12 +235,14 @@ public class NewCustomer extends Fragment implements LocationListener {
         edtRef=(TextInputEditText)root.findViewById(R.id.edtnewcustRef);
         edtLoc=(TextInputEditText)root.findViewById(R.id.edtnewcustLoc);
         edtAddr=(TextInputEditText)root.findViewById(R.id.edtnewcustAddr);
-        edtMac=(TextInputEditText)root.findViewById(R.id.edtnewcustRO);
+        edtMac=root.findViewById(R.id.edtnewcustMachines);
         edtPart=(TextInputEditText)root.findViewById(R.id.edtnewcustPart);
         edtPrice=(TextInputEditText)root.findViewById(R.id.edtnewcustPrice);
         edtHC=(TextInputEditText)root.findViewById(R.id.edtnewcustHC);
         edtDate=root.findViewById(R.id.edtnewcustDate);
         btnSave=(Button)root.findViewById(R.id.btnnewcustSave);
+
+
 
         macArrName=new String[150];
 
@@ -296,52 +301,7 @@ public class NewCustomer extends Fragment implements LocationListener {
         });
 
 
-        edtMac.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View view) {
-                                          //Toast.makeText(getActivity(), "Hello", Toast.LENGTH_SHORT).show();
-                                          sb1.setLength(0);
 
-                                          macList=new String[listMac.size()];
-                                          checkedMac = new boolean[listMac.size()];
-                                          for (int i = 0; i < listMac.size(); i++) {
-                                              macList[i]=(String)listMac.get(i);
-                                              checkedMac[i]=false;
-                                          }
-                                          AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                          builder.setTitle("Choose a Machine");
-
-// Add a checkbox list
-                                          String[] animals = {"horse", "cow", "camel", "sheep", "goat"};
-                                          boolean[] checkedItems = {true, false, false, true, false};
-                                          builder.setMultiChoiceItems(macList, checkedMac, new DialogInterface.OnMultiChoiceClickListener() {
-                                              @Override
-                                              public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                                  // The user checked or unchecked a box
-                                                  //Toast.makeText(getActivity(), "" + which, Toast.LENGTH_SHORT).show();
-                                                  if(sb1.length()!=0)
-                                                  {
-                                                      sb1.append(","+listMac.get(which).toString());
-                                                  }
-                                                  else {
-                                                      sb1.append(listMac.get(which).toString());
-                                                  }
-                                              }
-                                          });
-                                          builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                              @Override
-                                              public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                  //Toast.makeText(getActivity(), ""+sb1, Toast.LENGTH_SHORT).show();
-                                                  edtMac.setText(sb1);
-
-                                              }
-                                          });
-                                          builder.show();
-
-
-                                      }
-                                  });
 
         edtLoc.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -417,6 +377,8 @@ public class NewCustomer extends Fragment implements LocationListener {
         });
 
 
+
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -426,7 +388,7 @@ public class NewCustomer extends Fragment implements LocationListener {
                 ref=edtRef.getText().toString();
                 loc=edtLoc.getText().toString();
                 addr=edtAddr.getText().toString();
-                romac=edtMac.getText().toString();
+            //    romac=edtMac.getText().toString();
                 parts=edtPart.getText().toString();
                 price=edtPrice.getText().toString();
                 handcash=edtHC.getText().toString();
@@ -608,6 +570,32 @@ public class NewCustomer extends Fragment implements LocationListener {
 
         cvMacPic=(CardView)root.findViewById(R.id.cardnewcustMacPhoto);
         imgMac=(ImageView)root.findViewById(R.id.imgMacPic);
+        machineList.add("Dolphine water purifier INR 9000");
+        machineList.add("Nature + water purifier INR 9000");
+        machineList.add("Clean water water purifier INR 9000");
+        machineList.add("Aqua Grand Plus Water Purifier INR 10800");
+        machineList.add("Aqua Touch Water Purifier INR 9500");
+        machineList.add("Aqua Pearl Water Purifier INR 14000");
+        machineList.add("Aquafresh Water Purifier INR 11000");
+        machineList.add("Aqua glance water purifier INR 9500");
+        machineList.add("25 LPH INR 18000");
+        machineList.add("50LPH INR 25000");
+        machines = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, machineList);
+        machines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edtMac.setAdapter(machines);
+        edtMac.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                romac = machineList.get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                romac = machineList.get(0);
+
+            }
+        });
         cvMacPic.setOnClickListener(new View.OnClickListener() {
             String btnTake;
             @Override

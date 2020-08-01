@@ -41,7 +41,6 @@ public class CustomerView extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     String key;

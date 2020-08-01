@@ -214,6 +214,7 @@ public class ServiceEntry extends Fragment  {
             }
         });
 
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,7 +261,7 @@ public class ServiceEntry extends Fragment  {
                 else {
                     Double raw = Double.parseDouble(edtRAW.getText().toString());
                     Double aro = Double.parseDouble(edtARO.getText().toString());
-                    DecimalFormat df2 = new DecimalFormat("#.##");
+                    DecimalFormat df2 = new DecimalFormat("#.###");
                     //rej = Double.parseDouble("3.5") + Double.parseDouble("4.5");
                     rej=(raw+aro)/raw;
                     edtRej.setText(""+df2.format(rej));

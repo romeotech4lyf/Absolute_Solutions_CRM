@@ -89,11 +89,10 @@ public class RVAdapterCust extends RecyclerView.Adapter<RVAdapterCust.ViewHolder
                 TextInputEditText tvPrice=(TextInputEditText) dialogView.findViewById(R.id.tvPrice);
                 TextInputEditText tvHC=(TextInputEditText) dialogView.findViewById(R.id.tvHC);
 
+
+
                 ImageView imgMac=(ImageView)dialogView.findViewById(R.id.imgMac);
                 ImageView imgCust=(ImageView)dialogView.findViewById(R.id.imgCust);
-
-
-
 
                 tvName.setText(""+customer.getName().toString());
                 tvDate.setText(""+customer.getDate().toString());

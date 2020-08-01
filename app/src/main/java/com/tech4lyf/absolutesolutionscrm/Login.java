@@ -65,13 +65,15 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String un,pass;
+               String un,pass;
                 un="testuser";
                 pass="Test@2019";
 
                 un=editUserName.getText().toString();
                 pass=editPassword.getText().toString();
                 login(un,pass);
+
+
 
                 //testIp();
                 //login(editUserName.getText().toString(),editPassword.getText().toString());
@@ -101,6 +103,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "Login Success!", Toast.LENGTH_SHORT).show();
                             Intent actDashboard=new Intent(Login.this,Home.class);
                             startActivity(actDashboard);
+                            Login.this.finish();
 
 
 

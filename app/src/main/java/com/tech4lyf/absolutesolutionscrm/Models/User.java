@@ -2,16 +2,15 @@ package com.tech4lyf.absolutesolutionscrm.Models;
 
 public class User {
     String key;
-
     String username;
     String  password;
 
     public User(String key, String username, String password) {
         this.key = key;
         this.username= username;
-
         this.password= password;
     }
+
 
     public User() {
     }

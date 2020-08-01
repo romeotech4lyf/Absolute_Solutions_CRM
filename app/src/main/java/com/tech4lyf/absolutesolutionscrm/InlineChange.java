@@ -4,11 +4,30 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.tech4lyf.absolutesolutionscrm.Models.ServiceEntryModel;
+import com.tech4lyf.absolutesolutionscrm.ui.RVAdapterInline;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -69,6 +88,8 @@ public class InlineChange extends Fragment {
         return inflater.inflate(R.layout.fragment_inline_change, container, false);
     }
 
+    private RecyclerView recyclerView;
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -92,18 +113,55 @@ public class InlineChange extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    private ArrayList <ServiceEntryModel> serviceEntryModels = new ArrayList<>();
+    DatabaseReference databaseReference;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = view.findViewById(R.id.inline_change_list);
+        final RVAdapterInline rvAdapterInline = new RVAdapterInline(this.getContext(),serviceEntryModels);
+        recyclerView.setAdapter(rvAdapterInline);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("ServiceEntry");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        ServiceEntryModel serviceEntryModel = dataSnapshot1.getValue(ServiceEntryModel.class);
+                        try{
+                        if(serviceEntryModel.getParts().contains("INLINE") || serviceEntryModel.getParts().contains("CARBON") || serviceEntryModel.getParts().contains("SEDIMENT")||serviceEntryModel.getParts().contains("inline")) {
+                            if(TimeUnit.DAYS.
+                                    convert(Math.abs((Calendar.getInstance().getTime()).getTime())
+                                            - (new SimpleDateFormat("dd-MM-yyyy").parse(serviceEntryModel.getDate())).getTime(),TimeUnit.MILLISECONDS)==365) {
+                                serviceEntryModels.add(serviceEntryModel);
+
+                            }
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    }
+                    rvAdapterInline.setServiceEntryModels(serviceEntryModels);
+                    rvAdapterInline.notifyDataSetChanged();
+
+                }
+                Log.d("jhhh",serviceEntryModels.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
 }

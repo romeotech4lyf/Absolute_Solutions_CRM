@@ -6,14 +6,22 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.tech4lyf.absolutesolutionscrm.Models.ServiceEntryModel;
 import com.tech4lyf.absolutesolutionscrm.ui.serviceentry.ServiceEntry;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity implements ServiceEntry.OnFragmentInteractionListener {
 
@@ -53,6 +63,32 @@ public class Home extends AppCompatActivity implements ServiceEntry.OnFragmentIn
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+      /*  DatabaseReference databaseReference;
+        final ArrayList<ServiceEntryModel> serviceEntryModelsInline = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference("ServiceEntry");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        ServiceEntryModel serviceEntryModel = dataSnapshot1.getValue(ServiceEntryModel.class);
+                        if(serviceEntryModel.getParts().contains("INLINE") || serviceEntryModel.getParts().contains("CARBON") || serviceEntryModel.getParts().contains("SEDIMENT")||serviceEntryModel.getParts().contains("inline"))
+                            serviceEntryModelsInline.add(serviceEntryModel);
+
+                    }
+
+
+                }
+                Log.d("jhhh",serviceEntryModelsInline.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
+
     }
 
     @Override
