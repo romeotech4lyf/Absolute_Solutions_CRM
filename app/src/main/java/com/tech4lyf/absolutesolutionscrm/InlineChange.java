@@ -134,19 +134,12 @@ public class InlineChange extends Fragment {
                 if(dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         ServiceEntryModel serviceEntryModel = dataSnapshot1.getValue(ServiceEntryModel.class);
-                        try{
                         if(serviceEntryModel.getParts().contains("INLINE") || serviceEntryModel.getParts().contains("CARBON") || serviceEntryModel.getParts().contains("SEDIMENT")||serviceEntryModel.getParts().contains("inline")) {
-                            if(TimeUnit.DAYS.
-                                    convert(Math.abs((Calendar.getInstance().getTime()).getTime())
-                                            - (new SimpleDateFormat("dd-MM-yyyy").parse(serviceEntryModel.getDate())).getTime(),TimeUnit.MILLISECONDS)==365) {
-                                serviceEntryModels.add(serviceEntryModel);
+                           serviceEntryModels.add(serviceEntryModel);
 
-                            }
+
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
+                    
                     }
                     rvAdapterInline.setServiceEntryModels(serviceEntryModels);
                     rvAdapterInline.notifyDataSetChanged();
